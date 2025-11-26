@@ -2,7 +2,7 @@ import os
 import glob
 import shutil
 
-# 👇 Adjust these 3 variables as needed
+# Adjust these 3 variables as needed
 reader_id = 61
 librispeech_root = "/home/student/workspace/nomades_project/data/LibriSpeech/test-clean"
 output_root = "/home/student/workspace/nomades_project/data/dataset_dir"
