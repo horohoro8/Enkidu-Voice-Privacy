@@ -2,12 +2,12 @@
 # import sys
 # from pathlib import Path
 
-import sys
-from pathlib import Path #because os.path is old
-# needed for Enkidu
-import torch
-import torchaudio
-from speechbrain.inference import SpeakerRecognition
+# import sys
+# from pathlib import Path #because os.path is old
+# # needed for Enkidu
+# import torch
+# import torchaudio
+# from speechbrain.inference import SpeakerRecognition
 
 # #print(Path(__file__).parent.parent.parent / 'dependencies' / 'Enkidu')
 
@@ -25,3 +25,11 @@ from speechbrain.inference import SpeakerRecognition
 # from core import enkidu
 
 # print(dir(enkidu))
+
+# Test 1: WITHOUT .copy()
+DEFAULT_CONFIG = {'device': 'cpu', 'noise_level': 0.4}
+
+config1 = DEFAULT_CONFIG  # No copy!
+config1['device'] = 'cuda'
+
+print(DEFAULT_CONFIG['device'])  # What do you think this prints?

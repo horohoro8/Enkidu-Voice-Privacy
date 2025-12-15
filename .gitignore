@@ -2,3 +2,6 @@ data/
 .DS_Store
 __pycache__/
 *.pyc
+enkidu_native_env/
+*.pt
+test_*.flac
