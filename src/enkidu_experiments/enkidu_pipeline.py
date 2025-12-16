@@ -23,7 +23,7 @@ class EnkiduPipeline:
         'steps' : 40,
         'alpha' : 0.1,
         'mask_ratio' : 0.3,
-        'frame_length' : 120,
+        'frame_length' : 30,
         'noise_level' : 0.4,
     }
 
@@ -65,8 +65,8 @@ class EnkiduPipeline:
         print(f"\nLoading noise patterns from: {noise_path}")
             
         # Load the checkpoint file
-        checkpoint = torch.load(noise_path, map_location=self.device)
-            
+        checkpoint = torch.load(noise_path, map_location=self.device, weights_only=False)          
+
         # Extract noise patterns and move to device
         noise_real = checkpoint['noise_real'].to(self.device)
         noise_imag = checkpoint['noise_imag'].to(self.device)

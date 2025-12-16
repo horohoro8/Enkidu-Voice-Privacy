@@ -5,3 +5,5 @@ __pycache__/
 enkidu_native_env/
 *.pt
 test_*.flac
+audio_samples/
+learning/
