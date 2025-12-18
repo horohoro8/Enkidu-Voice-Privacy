@@ -11,7 +11,7 @@ from pathlib import Path
 import torchaudio
 
 # Add src to path so we can import the pipeline
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from enkidu_experiments.enkidu_pipeline import EnkiduPipeline
 

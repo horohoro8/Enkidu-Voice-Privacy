@@ -12,7 +12,7 @@ from collections import defaultdict
 import time
 
 # Add Enkidu to path
-ENKIDU_PATH = Path(__file__).parent / 'dependencies' / 'Enkidu'
+ENKIDU_PATH = Path(__file__).parent.parent / 'dependencies' / 'Enkidu'
 sys.path.insert(0, str(ENKIDU_PATH))
 
 from core import Enkidu
@@ -56,7 +56,7 @@ print("LOADING LIBRISPEECH DATASET")
 print("="*60)
 
 # Set up data directory
-DATA_DIR = Path(__file__).parent / 'data' / 'librispeech'
+DATA_DIR = Path(__file__).parent.parent / 'data' / 'librispeech'
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 print(f"Data directory: {DATA_DIR}")
@@ -102,15 +102,21 @@ print("="*60)
 
 # Group samples by speaker
 # torchaudio LIBRISPEECH returns tuples: (waveform, sample_rate, transcript, speaker_id, chapter_id, utterance_id)
-speaker_samples = defaultdict(list)
+speaker_samples = defaultdict(list) #Automatically creates empty lists for new keys
 for sample in dataset:
     # Extract speaker_id (index 3 in the tuple)
-    speaker_id = sample[3] if len(sample) > 3 else 0
+    speaker_id = sample[3] if len(sample) > 3 else 0 #check the dim of sample -> without this can be an index error
     speaker_samples[speaker_id].append(sample)
 
 # Find speaker with most samples
 if len(speaker_samples) > 0:
     # Get speakers with enough samples
+    # My version
+    # valid_speakers = {}
+
+    # for spk, samples in speaker_samples.items():
+    #     if len(samples) >= CONFIG['num_training_samples']:
+    #         valid_speakers[spk] = samples
     valid_speakers = {
         spk: samples for spk, samples in speaker_samples.items()
         if len(samples) >= CONFIG['num_training_samples']
@@ -119,7 +125,7 @@ if len(speaker_samples) > 0:
     if len(valid_speakers) > 0:
         # Select first valid speaker
         selected_speaker = list(valid_speakers.keys())[0]
-        selected_samples = valid_speakers[selected_speaker][:CONFIG['num_training_samples']]
+        selected_samples = valid_speakers[selected_speaker][:CONFIG['num_training_samples']] #take only the num of training samples required
         print(f"✓ Selected speaker: {selected_speaker}")
     else:
         # Not enough samples per speaker, just take first N
@@ -143,6 +149,7 @@ print("="*60)
 
 training_waveforms = []
 for i, sample in enumerate(selected_samples):
+    # try and except method so it continues processing the whole list of selected samples
     try:
         # torchaudio LIBRISPEECH returns: (waveform, sample_rate, transcript, speaker_id, chapter_id, utterance_id)
         waveform = sample[0]  # Already loaded as tensor!
@@ -159,13 +166,13 @@ for i, sample in enumerate(selected_samples):
             )
         
         training_waveforms.append(waveform)
-        
+        # update the user of the progress but only every 5 iteration (not flood the terminal)
         if (i + 1) % 5 == 0:
             print(f"  Processed {i + 1}/{len(selected_samples)} samples")
             
-    except Exception as e:
+    except Exception as e: #any type of error: "Exception"
         print(f"  ⚠️  Skipped sample {i}: {e}")
-        continue
+        continue #jump to the next
 
 print(f"\n✓ Successfully processed {len(training_waveforms)} samples")
 
@@ -268,6 +275,7 @@ print(f"  - test_protected_librispeech.flac")
 
 # Evaluate protection effectiveness
 print("\nEvaluating protection...")
+# specify no grad for evaluation purposes
 with torch.no_grad():
     orig_emb = speaker_model.encode_batch(test_audio)
     prot_emb = speaker_model.encode_batch(protected)

@@ -13,11 +13,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Import your actual EnkiduPipeline
-# Adjust this import path based on where you run the script from
+# Add parent directory to path so we can import from src/
+import sys
+from pathlib import Path
+project_root = Path(__file__).parent.parent  # Go up from scripts/ to project root
+sys.path.insert(0, str(project_root))
+
 try:
     from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
-except ImportError:
-    st.error("⚠️ Could not import EnkiduPipeline. Make sure you're running from the project root directory.")
+except ImportError as e:
+    st.error(f"⚠️ Could not import EnkiduPipeline: {e}")
+    st.error(f"Current directory: {Path.cwd()}")
+    st.error(f"Script location: {Path(__file__).parent}")
+    st.error(f"Project root: {project_root}")
     st.stop()
 
 
@@ -172,7 +180,9 @@ if uploaded_file is not None:
     
     # Audio playback section
     st.subheader("Original Audio")
-    st.audio(uploaded_file, format=uploaded_file.type)
+    uploaded_file.seek(0)
+    st.audio(uploaded_file) 
+    #st.audio(uploaded_file, format=uploaded_file.type)
     
     st.info("👇 Click the button below to apply protection")
 else:
@@ -312,7 +322,7 @@ if 'original_audio_tensor' in st.session_state and 'protected_audio_tensor' in s
     - The spectrograms show frequency content over time
     - Y-axis uses logarithmic scale (20 Hz - 20 kHz, full human hearing range)
     - Protected audio should look visually similar (preserve quality)
-    - But subtle differences prevent speaker recognition
+    - But Subtle differences prevent speaker recognition
     """)
 else:
     st.write("*Spectrograms will appear here after protecting an audio file*")

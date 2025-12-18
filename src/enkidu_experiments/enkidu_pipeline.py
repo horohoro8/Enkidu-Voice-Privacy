@@ -1,5 +1,5 @@
 import sys
-from pathlib import Path #because os.path is old
+from pathlib import Path 
 # needed for Enkidu
 import torch
 import torchaudio
@@ -95,6 +95,7 @@ class EnkiduPipeline:
             print("✓ Speaker model loaded")
         return self._speaker_model
 
+#getters - lazy loading principle
     @property
     def enkidu_model(self):
         """
