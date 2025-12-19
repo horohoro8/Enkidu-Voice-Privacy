@@ -382,18 +382,13 @@ For the certification presentation, this limitation is discussed openly as:
    - Understood gradient-based optimization for noise generation
    - Discovered perceptual masking techniques
 
-2. **Audio Signal Processing**
-   - Mastered STFT (Short-Time Fourier Transform) for frequency analysis
-   - Learned complex number mathematics for phase/magnitude manipulation
-   - Understood sampling rates and audio normalization
-
-3. **Python Best Practices**
+2. **Python Best Practices**
    - Implemented lazy loading with `@property` decorators
    - Used dictionary comprehensions with filtering
    - Applied defensive programming patterns
    - Created modular, testable code architecture
 
-4. **ML Pipeline Design**
+3. **ML Pipeline Design**
    - Separated training (procedural scripts) from inference (OOP classes)
    - Implemented proper device management (CPU/GPU/MPS)
    - Used checkpointing for model persistence
@@ -455,9 +450,9 @@ This project is developed as part of the Python Software Engineer certification 
 
 ### Credits
 
-**Developed by**: Mark RALLIE ALLADO  
+**Developed by**: Mark ALLADO  
 **Certification**: Python Programming Language - Oct-Dec 2025  
-**Institution**: nomades advanced technologies, Zürich
+**Institution**: nomades advanced technologies, Genève
 
 **External Libraries:**
 - [Enkidu](https://github.com/voiceprivacy/Enkidu) - Adversarial audio protection framework
@@ -478,9 +473,7 @@ This project is developed as part of the Python Software Engineer certification 
 
 If you have questions about this project or want to discuss voice privacy protection:
 
-- 📧 Email: [your-email@example.com]
-- 💼 LinkedIn: [Your LinkedIn Profile]
-- 🐙 GitHub: [@your-username](https://github.com/your-username)
+- 🐙 GitHub: [@horohoro8](https://github.com/horohoro8)
 
 ### Contribution Guidelines
 
@@ -491,50 +484,6 @@ This is an educational certification project, but suggestions and improvements a
 - Want to extend the functionality
 - Can help with domain adaptation challenges
 
----
-
-## Presentation Information
-
-**Presentation Date**: [To be determined]  
-**Duration**: 30 minutes (10 min presentation + 20 min code review)  
-**Audience**: Certification jury and fellow students
-
-**Key Presentation Points:**
-1. Application usage demonstration (GUI + CLI)
-2. Competitive analysis vs. existing solutions
-3. Target audience identification
-4. MVP functionality showcase
-5. Architecture visualization
-6. Challenges encountered and solutions
-
----
-
-## Appendix: Technical Details
-
-### Cosine Similarity Explained
-
-Speaker embeddings are high-dimensional vectors (typically 192-512 dimensions) that represent voice characteristics. Cosine similarity measures the angle between two vectors:
-
-```
-similarity = (A · B) / (||A|| × ||B||)
-```
-
-**Why Cosine Similarity?**
-- Invariant to amplitude scaling (volume doesn't affect similarity)
-- Measures angular distance in high-dimensional space
-- Standard metric for speaker verification tasks
-- Range: -1 (opposite) to +1 (identical)
-
-### STFT Parameters
-
-The Short-Time Fourier Transform converts audio from time domain to frequency domain:
-
-- **Window Size**: 1024 samples (~64ms at 16kHz)
-- **Hop Length**: 512 samples (50% overlap)
-- **Window Function**: Hann window for smooth transitions
-- **FFT Size**: 1024 points
-
-These parameters balance time-frequency resolution for speech signals.
 
 ---
 
