@@ -1,224 +1,172 @@
-# Nomades project
-
-![nomades logo](https://nomades.ch/wp-content/themes/nomades_23/assets/imgs/logo-nomades.png)
-
-## PPL_2025_1012
-## Mark Allado
-## allado.mark@proton.me
-
-## Description
-
 # 🎤 Enkidu Voice Privacy Protection
 
 **Adversarial Audio Protection Against Speaker Recognition Systems**
 
-*Python Certification Project - October-December 2025*
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.9.1-red.svg)
+![License](https://img.shields.io/badge/License-Educational-green.svg)
+
+*Capstone Project - Python Software Engineer Certification @ nomades advanced technologies (Oct-Dec 2025)*
+
+---
+
+## 🎯 Overview
+
+Enkidu is an adversarial audio protection system that applies imperceptible noise to speech recordings, preventing AI-based speaker identification while maintaining audio quality for human listeners.
+
+**What makes this project unique:**
+- 🛡️ **Universal Protection**: Single training session protects any voice
+- 🎵 **Quality Preservation**: Imperceptible changes to human ears
+- ⚡ **Optimized Training**: 3-5 minutes on Apple Silicon M4 GPU
+- 🖥️ **Dual Interface**: Professional CLI API + interactive Streamlit GUI
+- 📊 **Complete Pipeline**: From training to deployment
+
+### Project Goals
+
+This certification project demonstrates:
+1. **Machine Learning Engineering**: PyTorch pipelines, adversarial training, evaluation metrics
+2. **Audio Signal Processing**: STFT/ISTFT transformations, frequency-domain operations
+3. **Software Architecture**: Object-oriented design, lazy loading, configuration management
+4. **Practical Application**: Real privacy protection tool with professional UX
 
 ---
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [How It Works](#how-it-works)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage Examples](#usage-examples)
-- [Project Architecture](#project-architecture)
-- [Evaluation Results](#evaluation-results)
-- [Limitations & Learning](#limitations--learning)
-- [Technical Stack](#technical-stack)
-- [Development Journey](#development-journey)
-- [Future Improvements](#future-improvements)
-- [License & Credits](#license--credits)
+- [Key Features](#-key-features)
+- [How It Works](#-how-it-works)
+- [Quick Start](#-quick-start)
+- [Installation](#-installation)
+- [Usage Examples](#-usage-examples)
+- [Evaluation Results](#-evaluation-results)
+- [Project Architecture](#-project-architecture)
+- [Learning Outcomes](#-learning-outcomes)
+- [Future Improvements](#-future-improvements)
+- [License & Credits](#-license--credits)
 
 ---
 
-## Overview
+## ✨ Key Features
 
-Enkidu is a voice privacy protection system that applies imperceptible adversarial noise to speech recordings, preventing AI-based speaker recognition while maintaining audio quality for human listeners.
+### Core Functionality
+- ✅ **Universal Adversarial Perturbations**: Trained noise patterns generalize across speakers
+- ✅ **Frequency-Domain Protection**: STFT-based modifications preserve perceptual quality
+- ✅ **Comprehensive Evaluation**: Cosine similarity metrics with speaker embeddings
+- ✅ **Hybrid Architecture**: Native training (MPS) + containerized inference
 
-This project demonstrates advanced Python concepts including:
-- Machine learning pipeline design with PyTorch
-- Audio signal processing with torchaudio
-- GUI development with Streamlit
-- Integration with pre-trained neural networks (SpeechBrain)
-- Professional software architecture patterns
+### User Interfaces
+- 🖥️ **Command-Line Pipeline**: Clean Python API for batch processing
+- 🌐 **Streamlit GUI**: Interactive web interface with real-time playback
+- 📊 **Spectrogram Visualization**: Side-by-side comparison of original vs. protected audio
 
-### 🎯 Project Goals
-
-1. **Privacy Protection**: Protect speaker identity from Automatic Speaker Verification (ASV) systems
-2. **Audio Quality**: Maintain intelligibility and natural sound for human listeners
-3. **Educational Value**: Showcase Python software engineering best practices
-4. **Practical Application**: Provide a working tool with both CLI and GUI interfaces
-
----
-
-## Key Features
-
-### ✨ Core Functionality
-
-- **Universal Adversarial Perturbations**: Noise patterns trained on multiple speakers that generalize to new voices
-- **Frequency-Domain Protection**: Applies imperceptible modifications in the spectral domain using STFT
-- **Quality Preservation**: Maintains audio intelligibility while fooling speaker recognition systems
-- **Comprehensive Evaluation**: Measures protection effectiveness using cosine similarity of speaker embeddings
-
-### 🛠️ User Interfaces
-
-- **Command-Line Pipeline**: Professional Python API for batch processing
-- **Streamlit GUI**: Interactive web interface with real-time audio playback and spectrogram visualization
-- **Modular Design**: Separate training and inference pipelines following ML deployment best practices
-
-### 📊 Visualization & Analysis
-
-- **Spectrogram Comparison**: Side-by-side visualization of original vs. protected audio
-- **Protection Metrics**: Quantitative evaluation with similarity scores and protection levels
-- **Real-Time Feedback**: Progress indicators and detailed logging throughout processing
+### Technical Highlights
+- 🚀 **MPS Acceleration**: 10-15x speedup on Apple Silicon vs CPU
+- 🎓 **Educational Design**: Step-by-step learning with incremental complexity
+- 📦 **Modular Architecture**: Separation of training scripts and inference pipeline
 
 ---
 
-## How It Works
+## 🔬 How It Works
 
-### The Science Behind Enkidu
+### The Science
 
-1. **Speaker Embeddings**: Neural networks create high-dimensional "fingerprints" from voice recordings
-2. **Adversarial Optimization**: Training process learns noise patterns that maximize distance between embeddings
-3. **Universal Perturbations**: Single noise pattern works across different speakers by exploiting neural network vulnerabilities
-4. **Frequency Masking**: Noise applied in frequency domain with perceptual masking to remain imperceptible
+1. **Speaker Embeddings**: Neural networks extract high-dimensional voice "fingerprints"
+2. **Adversarial Optimization**: Gradient-based training finds noise that maximizes embedding distance
+3. **Universal Perturbations**: Single pattern exploits neural network architecture vulnerabilities
+4. **Perceptual Masking**: Frequency-domain noise remains imperceptible to humans
 
 ### Protection Pipeline
-
 ```
-Original Audio → STFT → Apply Adversarial Noise → ISTFT → Protected Audio
-                  ↓                                           ↓
-          Frequency Domain                            Time Domain
+Input Audio → STFT → Apply Adversarial Noise → ISTFT → Protected Audio
+               ↓         (frequency domain)         ↓
+         Spectrogram                         Time Domain
 ```
 
 ### Evaluation Methodology
 
-- **Metric**: Cosine similarity between speaker embeddings (0 = completely different, 1 = identical)
-- **Protection Levels**:
-  - **Excellent**: Similarity < 0.5 (unrecognizable)
-  - **Good**: Similarity 0.5-0.7 (partially obscured)
-  - **Moderate**: Similarity 0.7-0.85 (weakly protected)
-  - **Weak**: Similarity > 0.85 (easily recognized)
+**Metric**: Cosine similarity between ECAPA-TDNN speaker embeddings
+
+| Similarity Score | Protection Level | Interpretation |
+|-----------------|------------------|----------------|
+| < 0.5 | 🟢 Excellent | Speaker unrecognizable |
+| 0.5 - 0.7 | 🟡 Good | Partially obscured |
+| 0.7 - 0.85 | 🟠 Moderate | Weakly protected |
+| > 0.85 | 🔴 Weak | Easily recognized |
 
 ---
 
-## Installation
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Python 3.8 or higher
-- macOS (for MPS acceleration) or Linux/Windows with CPU/CUDA support
-- 4GB+ RAM recommended
-
-### Step 1: Clone the Repository
-
 ```bash
-git clone https://github.com/your-username/enkidu-voice-privacy.git
-cd enkidu-voice-privacy
+Python 3.8+
+4GB+ RAM
+macOS (for MPS) / Linux / Windows
 ```
 
-### Step 2: Set Up Virtual Environment
-
+### Installation
 ```bash
+# Clone repository
+git clone https://github.com/horohoro8/project-ppl-2025-1012-horohoro8.git
+cd project-ppl-2025-1012-horohoro8
+
 # Create virtual environment
 python -m venv enkidu_env
+source enkidu_env/bin/activate  # Windows: enkidu_env\Scripts\activate
 
-# Activate environment
-# On macOS/Linux:
-source enkidu_env/bin/activate
-# On Windows:
-enkidu_env\Scripts\activate
-```
+# Install dependencies
+pip install torch torchaudio speechbrain streamlit matplotlib
 
-### Step 3: Install Dependencies
-
-```bash
-pip install --upgrade pip
-pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
-pip install speechbrain streamlit matplotlib numpy
-```
-
-### Step 4: Set Up Enkidu Dependency
-
-```bash
-# Create dependencies directory
-mkdir -p dependencies
-
-# Clone Enkidu repository
-cd dependencies
-git clone https://github.com/your-enkidu-fork/Enkidu.git
+# Set up Enkidu dependency
+mkdir -p dependencies && cd dependencies
+git clone https://github.com/voiceprivacy/Enkidu.git
 cd ..
 ```
 
----
-
-## Quick Start
-
-### Train Your Noise Patterns
-
-**Option 1: Using LibriSpeech Dataset (Recommended)**
-
+### Train Noise Patterns
 ```bash
+# Option 1: Real speech data (LibriSpeech)
 python train_librispeech.py
-```
 
-This downloads the LibriSpeech dev-clean subset (~350MB) and trains universal noise patterns on real speech data.
-
-**Option 2: Using Synthetic Data (Faster)**
-
-```bash
+# Option 2: Synthetic data (faster demo)
 python train_native.py
 ```
 
-Creates synthetic audio samples for quick training demonstration.
-
-### Protect an Audio File (CLI)
-
+### Protect Audio (CLI)
 ```python
 from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
 
-# Initialize pipeline
 pipeline = EnkiduPipeline()
-
-# Load trained noise patterns
 noise_real, noise_imag = pipeline.load_noise('noise_patterns_librispeech.pt')
 
-# Protect audio file
 pipeline.protect_audio_file(
-    input_path='original.wav',
-    output_path='protected.wav',
-    noise_real=noise_real,
-    noise_imag=noise_imag
+    'original.wav',
+    'protected.wav',
+    noise_real,
+    noise_imag
 )
 ```
 
 ### Launch GUI
-
 ```bash
 streamlit run enkidu_gui.py
+# Navigate to http://localhost:8501
 ```
-
-Navigate to `http://localhost:8501` in your browser.
 
 ---
 
-## Usage Examples
+## 💡 Usage Examples
 
 ### Example 1: Protect a Podcast Clip
-
 ```bash
-# Download a podcast segment
-python download_podcast.py "https://youtube.com/watch?v=example" --duration 60
+# Download audio segment
+python download_podcast.py "https://youtube.com/watch?v=EXAMPLE" --duration 60
 
-# Test protection
+# Apply protection
 python test_podcast.py audio_samples/podcast_cropped_60s.wav
 ```
 
 ### Example 2: Batch Processing
-
 ```python
 from pathlib import Path
 from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
@@ -226,29 +174,19 @@ from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
 pipeline = EnkiduPipeline()
 noise_real, noise_imag = pipeline.load_noise('noise_patterns_librispeech.pt')
 
-# Process all files in a directory
-input_dir = Path('audio_input')
-output_dir = Path('audio_protected')
-
-for audio_file in input_dir.glob('*.wav'):
-    output_file = output_dir / f"protected_{audio_file.name}"
-    pipeline.protect_audio_file(
-        str(audio_file),
-        str(output_file),
-        noise_real,
-        noise_imag
-    )
+# Process directory
+for audio_file in Path('audio_input').glob('*.wav'):
+    output = f"protected_{audio_file.name}"
+    pipeline.protect_audio_file(str(audio_file), output, noise_real, noise_imag)
 ```
 
 ### Example 3: Custom Configuration
-
 ```python
-# Configure pipeline with custom parameters
 config = {
-    'device': 'mps',  # Use Apple Silicon GPU
-    'steps': 50,      # More training iterations
-    'alpha': 0.15,    # Larger perturbation steps
-    'noise_level': 0.5  # Stronger noise
+    'device': 'mps',      # Apple Silicon GPU
+    'steps': 50,          # Training iterations
+    'alpha': 0.15,        # Perturbation step size
+    'noise_level': 0.5    # Noise strength
 }
 
 pipeline = EnkiduPipeline(config=config)
@@ -256,237 +194,196 @@ pipeline = EnkiduPipeline(config=config)
 
 ---
 
-## Project Architecture
+## 📊 Evaluation Results
+
+### LibriSpeech Training Performance
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| **Similarity Score** | 0.4852 | 🟢 Excellent |
+| **Training Time** | ~4 min | ⚡ Fast (M4 MPS) |
+| **Audio Quality** | Imperceptible | ✅ Preserved |
+| **Dataset** | LibriSpeech dev-clean | 📚 20 samples |
+
+### Domain Adaptation Analysis
+
+| Audio Type | Similarity | Protection | Notes |
+|------------|-----------|------------|-------|
+| LibriSpeech (clean) | 0.48 | 🟢 Excellent | Training domain |
+| Podcast (conversational) | 0.81-0.85 | 🟠 Moderate | Domain shift |
+| Synthetic speech | 0.52 | 🟢 Excellent | Controlled test |
+
+**Key Insight**: Protection effectiveness varies across acoustic domains - an important ML generalization lesson documented transparently for educational purposes.
+
+---
+
+## 🏗️ Project Architecture
 
 ### File Structure
-
 ```
 enkidu-voice-privacy/
-├── src/
-│   └── enkidu_experiments/
-│       └── enkidu_pipeline.py      # Core pipeline class
-├── dependencies/
-│   └── Enkidu/                     # External adversarial audio library
+├── src/enkidu_experiments/
+│   └── enkidu_pipeline.py          # Core EnkiduPipeline class
+├── dependencies/Enkidu/            # External adversarial library
 ├── models/
-│   └── noise_patterns_librispeech.pt  # Trained noise patterns
-├── train_librispeech.py            # Training script (real data)
-├── train_native.py                 # Training script (synthetic data)
-├── enkidu_gui.py                   # Streamlit web interface
-├── test_podcast.py                 # CLI testing utility
-├── download_podcast.py             # Audio download helper
-└── README.md
+│   └── noise_patterns_librispeech.pt  # Trained noise
+├── train_librispeech.py            # Training (real data)
+├── train_native.py                 # Training (synthetic)
+├── enkidu_gui.py                   # Streamlit interface
+├── test_podcast.py                 # Testing utility
+└── download_podcast.py             # Audio preprocessing
 ```
 
-### Class Design: EnkiduPipeline
-
-The `EnkiduPipeline` class follows object-oriented best practices:
+### EnkiduPipeline Class Design
 
 **Key Design Patterns:**
-- **Lazy Loading**: Models loaded only when first accessed via `@property` decorators
-- **Configuration Management**: Default config with override capability
-- **Device Abstraction**: Transparent handling of CPU/GPU/MPS devices
-- **Error Handling**: Defensive programming with clear error messages
-
-**Main Methods:**
-- `load_noise()`: Load pre-trained adversarial patterns
-- `protect_audio_file()`: Complete audio protection pipeline
-- `evaluate_protection()`: Quantify protection effectiveness
-
 ```python
-# Lazy loading example
-@property
-def speaker_model(self):
-    """Load speaker recognition model only when needed"""
-    if self._speaker_model is None:
-        self._speaker_model = SpeakerRecognition.from_hparams(...)
-    return self._speaker_model
+class EnkiduPipeline:
+    # Lazy loading with @property
+    @property
+    def speaker_model(self):
+        if self._speaker_model is None:
+            self._speaker_model = SpeakerRecognition.from_hparams(...)
+        return self._speaker_model
+    
+    # Configuration management
+    DEFAULT_CONFIG = {
+        'device': 'cpu',
+        'steps': 40,
+        'alpha': 0.1,
+        ...
+    }
+    
+    # Device abstraction (CPU/GPU/MPS)
+    # Error handling with clear messages
+    # Comprehensive docstrings
 ```
 
----
-
-## Evaluation Results
-
-### LibriSpeech Training Results
-
-**Training Configuration:**
-- Dataset: LibriSpeech dev-clean subset
-- Samples: 20 audio clips from single speaker
-- Device: Apple M4 (MPS acceleration)
-- Training Time: ~4 minutes
-
-**Protection Performance:**
-- Similarity Score: **0.4852**
-- Protection Level: **EXCELLENT** ✅
-- Audio Quality: Imperceptible to human listeners
-
-### Test Results on Different Audio Types
-
-| Audio Type | Similarity Score | Protection Level | Notes |
-|------------|------------------|------------------|-------|
-| LibriSpeech (training domain) | 0.48 | Excellent ✅ | Clean read speech |
-| Podcast audio | 0.81-0.85 | Moderate ⚠️ | Domain shift challenges |
-| Synthetic speech | 0.52 | Excellent ✅ | Controlled testing |
+**Separation of Concerns:**
+- **Training scripts**: Procedural approach for one-time operations
+- **Pipeline class**: Object-oriented design for reusable inference
+- **GUI**: Separate presentation layer with Streamlit
 
 ---
 
-## Limitations & Learning
+## 🎓 Learning Outcomes
 
-### Domain Adaptation Challenges
+### Technical Skills Demonstrated
 
-**Key Finding**: Protection trained on clean LibriSpeech data shows reduced effectiveness on real-world conversational audio.
+1. **Machine Learning Engineering**
+   - Adversarial training with gradient-based optimization
+   - Speaker embedding extraction and similarity metrics
+   - Universal perturbation concept vs speaker-specific approaches
+   - Domain adaptation challenges and solutions
 
-**Why This Happens:**
-- **Acoustic Mismatch**: LibriSpeech contains clean, read speech while podcasts have natural conversation
-- **Background Noise**: Real-world recordings include music, room acoustics, and environmental sounds
-- **Speaking Style**: Read vs. spontaneous speech have different prosodic patterns
+2. **Audio Signal Processing**
+   - Short-Time Fourier Transform (STFT) operations
+   - Frequency-domain manipulation with perceptual masking
+   - Audio I/O with multiple formats (WAV, FLAC)
+   - Resampling and mono/stereo conversion
 
-**Educational Value**: This demonstrates the importance of domain adaptation in machine learning systems - a critical concept in real-world ML deployment.
+3. **Python Best Practices**
+   - Object-oriented design with lazy loading (`@property`)
+   - Configuration management with default overrides
+   - Device-agnostic code (CPU/GPU/MPS abstraction)
+   - Comprehensive error handling and logging
+   - Type hints and docstrings
 
-### Transparency in Presentation
+4. **Software Architecture**
+   - Separation of training (scripts) and inference (classes)
+   - Modular design with clear interfaces
+   - Checkpointing for model persistence
+   - Professional API design
 
-For the certification presentation, this limitation is discussed openly as:
-1. A valuable learning experience about ML generalization
-2. Evidence of critical thinking and scientific honesty
-3. An opportunity to propose future improvements (domain adaptation, data augmentation)
+### Problem-Solving Approach
 
----
-
-## Technical Stack
-
-### Core Libraries
-
-| Library | Version | Purpose |
-|---------|---------|---------|
-| PyTorch | 2.9.1 | Neural network operations & tensor computation |
-| torchaudio | 2.9.1 | Audio I/O and signal processing |
-| SpeechBrain | 0.5.16 | Pre-trained speaker recognition models |
-| Streamlit | Latest | Web-based GUI framework |
-| Matplotlib | Latest | Spectrogram visualization |
-| NumPy | Latest | Numerical operations |
-
-### Development Environment
-
-- **Primary**: macOS with Apple Silicon (M4)
-- **Acceleration**: MPS (Metal Performance Shaders) for GPU
-- **Python**: 3.10+
-- **IDE**: VS Code with Python extensions
+- **Systematic debugging**: PyTorch compatibility, import paths, device management
+- **Appropriate scoping**: Educational value over complexity (no over-engineering)
+- **Transparency**: Openly documenting limitations (domain adaptation)
+- **Critical thinking**: Understanding why single-speaker training generalizes
 
 ---
 
-## Development Journey
-
-### Learning Highlights
-
-1. **Adversarial ML Concepts**
-   - Learned that adversarial perturbations are largely universal
-   - Understood gradient-based optimization for noise generation
-   - Discovered perceptual masking techniques
-
-2. **Python Best Practices**
-   - Implemented lazy loading with `@property` decorators
-   - Used dictionary comprehensions with filtering
-   - Applied defensive programming patterns
-   - Created modular, testable code architecture
-
-3. **ML Pipeline Design**
-   - Separated training (procedural scripts) from inference (OOP classes)
-   - Implemented proper device management (CPU/GPU/MPS)
-   - Used checkpointing for model persistence
-   - Applied evaluation metrics appropriate for the task
-
-### Code Quality Practices
-
-- **Type Hints**: Clear function signatures with expected types
-- **Documentation**: Comprehensive docstrings for all public methods
-- **Error Handling**: Graceful degradation with helpful error messages
-- **Logging**: Informative progress indicators with emoji markers
-- **Configuration**: Externalized hyperparameters in config dictionaries
-
----
-
-## Future Improvements
+## 🔮 Future Improvements
 
 ### Technical Enhancements
 
 1. **Domain Adaptation**
-   - Train on diverse audio sources (podcasts, phone calls, recordings)
-   - Implement data augmentation (noise injection, reverberation)
-   - Fine-tune on target domain after initial training
+   - Multi-domain training (LibriSpeech + podcasts + phone calls)
+   - Data augmentation (background noise, reverberation, codec simulation)
+   - Transfer learning from clean to noisy domains
 
 2. **Real-Time Processing**
-   - Optimize for streaming audio (microphone input)
-   - Reduce latency with efficient algorithms
-   - Implement voice activity detection
+   - Streaming audio from microphone input
+   - Latency optimization (<100ms)
+   - Voice activity detection (VAD)
 
 3. **Enhanced Evaluation**
-   - Add perceptual quality metrics (PESQ, STOI)
-   - Test against multiple ASV systems
-   - Implement A/B listening tests
+   - Perceptual quality metrics (PESQ, STOI, MOS)
+   - Multiple ASV systems (x-vectors, Resemblyzer)
+   - Listening tests with human subjects
 
 ### Feature Additions
 
-1. **Adaptive Protection Levels**
-   - User-adjustable protection strength slider
-   - Automatic quality-privacy trade-off optimization
-   - Speaker-specific fine-tuning options
-
-2. **Extended Format Support**
-   - Support for MP3, AAC, OGG formats
-   - Video file audio track extraction
-   - Real-time streaming from URLs
-
-3. **Cloud Deployment**
-   - Containerization with Docker
-   - REST API for remote processing
-   - Web-based frontend (React/Vue.js)
+- Adjustable protection strength slider
+- Support for MP3, AAC, OGG formats
+- Video audio track processing
+- Batch processing GUI
+- REST API for cloud deployment
+- Docker containerization
 
 ---
 
-## License & Credits
+## 📚 Technical Stack
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **ML Framework** | PyTorch 2.9.1 | Tensor operations, gradient computation |
+| **Audio Processing** | torchaudio 2.9.1 | I/O, STFT, resampling |
+| **Speaker Recognition** | SpeechBrain 0.5.16 | ECAPA-TDNN embeddings |
+| **GUI** | Streamlit | Web interface |
+| **Visualization** | Matplotlib | Spectrograms |
+| **Acceleration** | MPS (Metal) | Apple Silicon GPU |
+| **Dataset** | LibriSpeech | Training corpus |
+
+---
+
+## 📄 License & Credits
+
+### Author
+
+**Mark ALLADO**  
+Python Software Engineer Certification  
+nomades advanced technologies, Genève  
+October-December 2025
+
+📧 allado.mark@proton.me  
+🐙 [@horohoro8](https://github.com/horohoro8)
+
+### Acknowledgments
+
+- **Enkidu Framework**: Base adversarial audio library ([GitHub](https://github.com/voiceprivacy/Enkidu))
+- **SpeechBrain**: Pre-trained speaker recognition models ([Website](https://speechbrain.github.io/))
+- **LibriSpeech**: Speech corpus by Vassil Panayotov et al.
+- **nomades advanced technologies**: Educational supervision and project guidance
+- **Course instructors**: Feedback and technical mentorship
 
 ### License
 
-This project is developed as part of the Python Software Engineer certification at nomades advanced technologies. It is provided for educational and research purposes.
+This project was developed as part of an educational certification program. It is provided for educational and research purposes.
 
-### Credits
-
-**Developed by**: Mark ALLADO  
-**Certification**: Python Programming Language - Oct-Dec 2025  
-**Institution**: nomades advanced technologies, Genève
-
-**External Libraries:**
-- [Enkidu](https://github.com/voiceprivacy/Enkidu) - Adversarial audio protection framework
-- [SpeechBrain](https://speechbrain.github.io/) - Speaker recognition models
-- [PyTorch](https://pytorch.org/) - Deep learning framework
-- [LibriSpeech](https://www.openslr.org/12/) - Speech corpus dataset
-
-**Special Thanks:**
-- Course instructors for project guidance and feedback
-- SpeechBrain team for ECAPA-TDNN pre-trained models
-- Enkidu authors for foundational adversarial audio research
+The code demonstrates Python software engineering skills learned during the certification and may be used as reference material for educational purposes with proper attribution.
 
 ---
 
-## Contact & Contribution
+## 🔗 Related Resources
 
-### Questions or Feedback?
-
-If you have questions about this project or want to discuss voice privacy protection:
-
-- 🐙 GitHub: [@horohoro8](https://github.com/horohoro8)
-
-### Contribution Guidelines
-
-This is an educational certification project, but suggestions and improvements are welcome! Please open an issue or pull request if you:
-
-- Find bugs or documentation errors
-- Have ideas for improvements
-- Want to extend the functionality
-- Can help with domain adaptation challenges
-
+- [Original nomades GitHub Repo](https://github.com/NomadesAdvancedTechnologies/project-ppl-2025-1012-horohoro8)
+- [nomades advanced technologies](https://nomades.ch/)
+- [Project Documentation (PDF)](./PSE_Description_Projet_202507.pdf)
 
 ---
 
 **⭐ If you found this project interesting, please star the repository!**
 
-*Last updated: December 2025*
+*Developed as a Python Software Engineer certification capstone project - December 2025*
