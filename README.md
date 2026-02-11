@@ -97,39 +97,32 @@ Input Audio → STFT → Apply Adversarial Noise → ISTFT → Protected Audio
 
 ## 🚀 Quick Start
 
-### Prerequisites
-```bash
-Python 3.8+
-4GB+ RAM
-macOS (for MPS) / Linux / Windows
-```
-
 ### Installation
 ```bash
 # Clone repository
-git clone https://github.com/horohoro8/project-ppl-2025-1012-horohoro8.git
-cd project-ppl-2025-1012-horohoro8
+git clone https://github.com/horohoro8/Enkidu-Voice-Privacy.git
+cd Enkidu-Voice-Privacy
 
 # Create virtual environment
 python -m venv enkidu_env
 source enkidu_env/bin/activate  # Windows: enkidu_env\Scripts\activate
 
 # Install dependencies
-pip install torch torchaudio speechbrain streamlit matplotlib
+pip install --upgrade pip
+pip install torch torchaudio speechbrain streamlit matplotlib numpy
 
-# Set up Enkidu dependency
-mkdir -p dependencies && cd dependencies
-git clone https://github.com/voiceprivacy/Enkidu.git
-cd ..
+# Verify Enkidu dependency is present
+ls dependencies/Enkidu/core/
+# Should show: __init__.py and other core modules
 ```
 
 ### Train Noise Patterns
 ```bash
-# Option 1: Real speech data (LibriSpeech)
-python train_librispeech.py
+# Option 1: Real speech data (LibriSpeech) - Recommended
+python scripts/train_librispeech.py
 
 # Option 2: Synthetic data (faster demo)
-python train_native.py
+python scripts/train_native.py
 ```
 
 ### Protect Audio (CLI)
@@ -137,7 +130,7 @@ python train_native.py
 from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
 
 pipeline = EnkiduPipeline()
-noise_real, noise_imag = pipeline.load_noise('noise_patterns_librispeech.pt')
+noise_real, noise_imag = pipeline.load_noise('models/noise_patterns_librispeech.pt')
 
 pipeline.protect_audio_file(
     'original.wav',
@@ -149,7 +142,7 @@ pipeline.protect_audio_file(
 
 ### Launch GUI
 ```bash
-streamlit run enkidu_gui.py
+streamlit run gui/enkidu_gui.py
 # Navigate to http://localhost:8501
 ```
 
@@ -160,10 +153,10 @@ streamlit run enkidu_gui.py
 ### Example 1: Protect a Podcast Clip
 ```bash
 # Download audio segment
-python download_podcast.py "https://youtube.com/watch?v=EXAMPLE" --duration 60
+python scripts/download_podcast.py "https://youtube.com/watch?v=EXAMPLE" --duration 60
 
 # Apply protection
-python test_podcast.py audio_samples/podcast_cropped_60s.wav
+python scripts/test_podcast.py audio_samples/podcast_cropped_60s.wav
 ```
 
 ### Example 2: Batch Processing
@@ -172,10 +165,10 @@ from pathlib import Path
 from src.enkidu_experiments.enkidu_pipeline import EnkiduPipeline
 
 pipeline = EnkiduPipeline()
-noise_real, noise_imag = pipeline.load_noise('noise_patterns_librispeech.pt')
+noise_real, noise_imag = pipeline.load_noise('models/noise_patterns_librispeech.pt')
 
 # Process directory
-for audio_file in Path('audio_input').glob('*.wav'):
+for audio_file in Path('audio_samples').glob('*.wav'):
     output = f"protected_{audio_file.name}"
     pipeline.protect_audio_file(str(audio_file), output, noise_real, noise_imag)
 ```
@@ -221,18 +214,51 @@ pipeline = EnkiduPipeline(config=config)
 
 ### File Structure
 ```
-enkidu-voice-privacy/
-├── src/enkidu_experiments/
-│   └── enkidu_pipeline.py          # Core EnkiduPipeline class
-├── dependencies/Enkidu/            # External adversarial library
-├── models/
-│   └── noise_patterns_librispeech.pt  # Trained noise
-├── train_librispeech.py            # Training (real data)
-├── train_native.py                 # Training (synthetic)
-├── enkidu_gui.py                   # Streamlit interface
-├── test_podcast.py                 # Testing utility
-└── download_podcast.py             # Audio preprocessing
+Enkidu-Voice-Privacy/
+├── src/
+│   ├── enkidu_experiments/
+│   │   ├── __init__.py
+│   │   └── enkidu_pipeline.py       # Core EnkiduPipeline class
+│   └── data_prep/
+│       ├── __init__.py
+│       └── prepare_librispeech.py   # Data preparation utilities
+├── scripts/
+│   ├── train_librispeech.py         # LibriSpeech training
+│   ├── train_native.py              # Synthetic data training
+│   ├── test_podcast.py              # Testing utility
+│   ├── download_podcast.py          # Audio download helper
+│   ├── experiment_noise_levels.py   # Noise optimization experiments
+│   └── compare_protection.py        # Protection comparison
+├── gui/
+│   └── enkidu_gui.py                # Streamlit web interface
+├── dependencies/
+│   └── Enkidu/
+│       ├── core/                    # Enkidu core module
+│       ├── wavdataset/              # Dataset utilities
+│       ├── enkidu_cli.py
+│       └── test_enkidu.py
+├── models/                          # Create this directory
+│   └── .gitkeep                     # (trained .pt files not in repo)
+├── requirements.txt                 # Production dependencies
+├── requirements_native.txt          # Development dependencies
+├── .gitignore
+└── README.md
 ```
+
+**Key Directories:**
+- **`src/enkidu_experiments/`**: Core pipeline implementation
+- **`scripts/`**: Training, testing, and utility scripts
+- **`gui/`**: Streamlit web interface
+- **`dependencies/Enkidu/`**: External adversarial audio library
+- **`models/`**: Directory for trained noise patterns (create locally, `.pt` files not tracked)
+
+**Local directories (not in repo):**
+After cloning, you'll need to create these directories locally as you use the tools:
+- `audio_samples/` - Test audio files (generated during use)
+- `data/` - Dataset downloads (created by training scripts)
+- `learning/` - Educational materials (optional)
+- `enkidu_native_env/` - Virtual environment (created during setup)
+- `*.pt` files in `models/` - Trained noise patterns (generated by training)
 
 ### EnkiduPipeline Class Design
 
@@ -260,9 +286,11 @@ class EnkiduPipeline:
 ```
 
 **Separation of Concerns:**
-- **Training scripts**: Procedural approach for one-time operations
-- **Pipeline class**: Object-oriented design for reusable inference
-- **GUI**: Separate presentation layer with Streamlit
+- **Core package** (`src/enkidu_experiments/`): Pipeline class with OOP design
+- **Scripts** (`scripts/`): Training, testing, and utility scripts
+- **GUI** (`gui/`): Streamlit web interface
+- **Dependencies** (`dependencies/Enkidu/`): External adversarial library
+- **Models** (`models/`): Directory for trained noise patterns (files generated locally)
 
 ---
 
@@ -305,6 +333,26 @@ class EnkiduPipeline:
 ---
 
 ## 🔮 Future Improvements
+
+### Multi-Method Integration
+
+1. **V-Cloak: Voice Transformation**
+   - Integrate V-Cloak for timbre modification and voice characteristic alteration
+   - Complement adversarial perturbations with voice transformation
+   - Allow users to choose between Enkidu (noise-based) and V-Cloak (transformation-based)
+   - Combine both methods for multi-layered protection
+
+2. **AntiFake: Deepfake Detection**
+   - Add deepfake detection capabilities to identify AI-generated voices
+   - Dual functionality: protect your voice AND detect fake voices
+   - Pre-screen audio before applying protection
+   - Provide authenticity verification for suspicious recordings
+
+3. **Additional Protection Methods**
+   - Explore Fawkes-Audio for voice cloning protection
+   - Research AdvPulse for time-domain perturbations
+   - Investigate neural voice camouflage approaches
+   - Build unified protection suite with method comparison
 
 ### Technical Enhancements
 
@@ -362,7 +410,7 @@ October-December 2025
 
 ### Acknowledgments
 
-- **Enkidu Framework**: Base adversarial audio library ([GitHub](https://github.com/voiceprivacy/Enkidu))
+- **Enkidu Framework**: Base adversarial audio library ([GitHub](https://github.com/NoobCodeNameless/Enkidu))
 - **SpeechBrain**: Pre-trained speaker recognition models ([Website](https://speechbrain.github.io/))
 - **LibriSpeech**: Speech corpus by Vassil Panayotov et al.
 - **nomades advanced technologies**: Educational supervision and project guidance
@@ -378,9 +426,8 @@ The code demonstrates Python software engineering skills learned during the cert
 
 ## 🔗 Related Resources
 
-- [Original nomades GitHub Repo](https://github.com/NomadesAdvancedTechnologies/project-ppl-2025-1012-horohoro8)
+- [GitHub Repository](https://github.com/horohoro8/Enkidu-Voice-Privacy)
 - [nomades advanced technologies](https://nomades.ch/)
-- [Project Documentation (PDF)](./PSE_Description_Projet_202507.pdf)
 
 ---
 

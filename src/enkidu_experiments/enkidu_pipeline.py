@@ -4,12 +4,8 @@ from pathlib import Path
 import torch
 import torchaudio
 
-# GOAL : to be able to import Enkidu we go back to the root of the project
-#need to make it more generalize (this is only for my personal)
-# ENKIDU_PATH = "/home/student/workspace/nomades_project/dependencies/Enkidu" 
 ENKIDU_PATH = Path(__file__).parent.parent.parent / 'dependencies' / 'Enkidu' #but the file should follow the same structure
 sys.path.append(str(ENKIDU_PATH)) #add the enkidu path so that I can import it or else it will only have the default
-#python prend le premier qu'il prend, il faut mettre en priorite le ENKIDU_PATH
 sys.path.insert(0, str(ENKIDU_PATH))
 from core import Enkidu
 from speechbrain.inference import SpeakerRecognition
