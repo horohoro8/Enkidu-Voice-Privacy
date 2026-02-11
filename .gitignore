@@ -6,4 +6,6 @@ enkidu_native_env/
 *.pt
 test_*.flac
 audio_samples/
+learning/src/enkidu_experiments/playground.py
+src/enkidu_experiments/playground.py
 learning/
